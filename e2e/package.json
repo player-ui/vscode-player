@@ -1,0 +1,9 @@
+{
+  "name": "vscode-e2e-test",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@player-ui/dsl": "^0.3.0",
+    "typescript": "^4.9.4"
+  }
+}
