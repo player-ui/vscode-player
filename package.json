@@ -3,9 +3,15 @@
   "displayName": "vscode-player",
   "description": "Syntax highlighting and validation for the player dsl",
   "publisher": "player-oss",
+  "private": true,
   "version": "0.0.0",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.56.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/player-ui/vscode-player.git"
   },
   "files": [
     "player-syntax.vsix",
@@ -19,8 +25,18 @@
     "player",
     "vscode"
   ],
-  "scripts": {},
-  "dependencies": {},
+  "scripts": {
+    "release": "auto shipit -vv",
+    "labelCheck": "auto pr-check",
+    "prepare": "is-ci || husky install"
+  },
+  "devDependencies": {
+    "auto": "^10.37.6",
+    "husky": "^7.0.0",
+    "is-ci": "^3.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.2"
+  },
   "contributes": {
     "languages": [
       {
