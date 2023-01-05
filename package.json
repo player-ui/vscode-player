@@ -4,7 +4,7 @@
   "description": "Syntax highlighting and validation for the player dsl",
   "publisher": "player-oss",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "engines": {
     "vscode": "^1.56.0"
