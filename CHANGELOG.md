@@ -1,3 +1,15 @@
+# v0.0.3 (Thu Jan 05 2023)
+
+#### ⚠️ Pushed to `main`
+
+- Add icon and fix link ([@adierkens](https://github.com/adierkens))
+
+#### Authors: 1
+
+- Adam Dierkens ([@adierkens](https://github.com/adierkens))
+
+---
+
 # v0.0.2 (Thu Jan 05 2023)
 
 #### ⚠️ Pushed to `main`
