@@ -4,9 +4,10 @@ An extension for working with Player content in VSCode.
 
 # Installation
 
-Install it from the VSCode Registry [here]()
+Install it from the VSCode Registry [here](https://marketplace.visualstudio.com/items?itemName=player-oss.vscode-player)
 
 ## Language Features
+
 > Utilities to assist with the embedded bindings and expressions in [Player](https://player-ui.github.io/latest/tools/dsl#bindingsexpressions).
 
 ### Syntax Highlighting

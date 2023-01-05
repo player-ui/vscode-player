@@ -1,8 +1,9 @@
 {
   "name": "vscode-player",
-  "displayName": "vscode-player",
+  "displayName": "Player VSCode",
   "description": "Syntax highlighting and validation for the player dsl",
   "publisher": "player-oss",
+  "icon": "media/icon-small.png",
   "private": true,
   "version": "0.0.2",
   "license": "MIT",

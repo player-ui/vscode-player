@@ -2,6 +2,11 @@
   "author": "intuit-svc <opensource-svc@intuit.com>",
   "baseBranch": "main",
   "plugins": [
-    "vscode"
+    [
+      "vscode",
+      {
+        "baseImagesUrl": "https://raw.githubusercontent.com/player-ui/vscode-player/main/"
+      }
+    ]
   ]
 }
