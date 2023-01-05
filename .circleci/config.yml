@@ -1,0 +1,124 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/vscode-player
+  docker:
+    - image: circleci/node:latest-browsers
+
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package.json checksum
+            # when this file is changed, this key will fail
+            - vscode-player-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+            - vscode-player-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - vscode-player-{{ .Branch }}
+            # Find the most recent cache used from any branch
+            - vscode-player-master
+            - vscode-player-
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: vscode-player-{{ .Branch }}-{{ checksum "yarn.lock" }}-{{ checksum ".circleci/config.yml" }}
+          paths:
+            - node_modules
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  checkLabels:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/vscode-player
+      - run:
+          name: Check SemVer label
+          command: yarn labelCheck --url $CIRCLE_BUILD_URL
+
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/vscode-player
+      - run:
+          name: Build
+          command: yarn build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  lint:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/vscode-player
+      - run:
+          name: Lint
+          command: yarn lint
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/vscode-player
+      - run:
+          name: Test
+          command: yarn test --ci --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
+      - run:
+          name: Send CodeCov Results
+          command: bash <(curl -s https://codecov.io/bash) -t $CODECOV_KEY
+      - store_test_results:
+          path: ./reports/junit/
+      - store_artifacts:
+          path: ./reports/junit
+
+  release:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/vscode-player
+      - run:
+          name: Rename VSCE env vars
+          command: echo 'export VSCE_TOKEN="$VSCE_PAT"' >> "$BASH_ENV"
+      - run: mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - run:
+          name: Release
+          command: yarn release
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - install
+
+      - checkLabels:
+          requires:
+            - install
+
+      # - build:
+      #     requires:
+      #       - install
+
+      # - lint:
+      #     requires:
+      #       - build
+
+      # - test:
+      #     requires:
+      #       - build
+
+      - release:
+          context:
+            - Publish
+          requires:
+            - install

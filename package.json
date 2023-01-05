@@ -26,7 +26,7 @@
     "vscode"
   ],
   "scripts": {
-    "release": "auto shipit -vv",
+    "release": "auto shipit",
     "labelCheck": "auto pr-check",
     "prepare": "is-ci || husky install"
   },
@@ -92,5 +92,8 @@
         }
       }
     ]
+  },
+  "dependencies": {
+    "@auto-it/vscode": "^10.37.6"
   }
 }
