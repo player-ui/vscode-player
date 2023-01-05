@@ -102,6 +102,8 @@ workflows:
       - install
 
       - checkLabels:
+          context:
+            - Publish
           requires:
             - install
 

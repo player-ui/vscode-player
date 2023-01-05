@@ -1,4 +1,6 @@
 {
+  "author": "intuit-svc <opensource-svc@intuit.com>",
+  "baseBranch": "main",
   "plugins": [
     "vscode"
   ]
