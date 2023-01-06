@@ -8,8 +8,12 @@ const pathA = b`foo.AA`;
 const pathB = b`foo.BB`;
 const pathC = b`foo['CC']`;
 
-const other = expr`foo()`;
+function foo() {}
 
-const testFn = e`test`;
+const x = foo();
+
+const other = expr`containsAny()`;
+
+const testFn = e`replace('foo') + concat() - ''`;
 
 const isTrue = e`${pathA} === ${pathB}`;
