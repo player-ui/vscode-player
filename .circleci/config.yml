@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/vscode-player
   docker:
-    - image: cimg/node:18.13.0
+    - image: cimg/node:18.12.1-browsers
 
 jobs:
   install:
