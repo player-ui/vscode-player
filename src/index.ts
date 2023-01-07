@@ -47,7 +47,6 @@ async function updatePluginWithConfig(config: {
   const api = await getTypescriptAPI();
   api.configurePlugin(TYPESCRIPT_EXPR_PLUGIN, config);
   log.appendLine("Plugin config updated");
-  log.appendLine(JSON.stringify(config));
 }
 
 /** Dynamically fetch all of the plugins from the given locations */
