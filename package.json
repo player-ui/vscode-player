@@ -41,9 +41,9 @@
     "test-compile": "tsc -p ./"
   },
   "dependencies": {
-    "@player-tools/typescript-expression-plugin": "0.2.2--canary.20.485",
-    "@player-tools/xlr": "0.2.2--canary.20.485",
-    "@player-tools/xlr-utils": "0.2.2--canary.20.485",
+    "@player-tools/typescript-expression-plugin": "0.2.2--canary.20.519",
+    "@player-tools/xlr": "0.2.2--canary.20.519",
+    "@player-tools/xlr-utils": "0.2.2--canary.20.519",
     "@types/node": "^18.11.18"
   },
   "devDependencies": {
