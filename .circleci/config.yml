@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/vscode-player
   docker:
-    - image: circleci/node:latest-browsers
+    - image: cimg/node:18.12.1-browsers
 
 jobs:
   install:
@@ -71,7 +71,7 @@ jobs:
           at: ~/vscode-player
       - run:
           name: Test
-          command: yarn test --ci --reporters=default --reporters=jest-junit
+          command: yarn test
           environment:
             JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
       - run:
@@ -107,20 +107,21 @@ workflows:
           requires:
             - install
 
-      # - build:
-      #     requires:
-      #       - install
+      - build:
+          requires:
+            - install
 
-      # - lint:
-      #     requires:
-      #       - build
+      - lint:
+          requires:
+            - build
 
-      # - test:
-      #     requires:
-      #       - build
+      - test:
+          requires:
+            - build
 
       - release:
           context:
             - Publish
           requires:
-            - install
+            - lint
+            - test

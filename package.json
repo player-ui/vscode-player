@@ -4,6 +4,7 @@
   "description": "Syntax highlighting and validation for the player dsl",
   "publisher": "player-oss",
   "icon": "media/icon-small.png",
+  "main": "./dist/index.js",
   "private": true,
   "version": "0.0.3",
   "license": "MIT",
@@ -15,6 +16,7 @@
     "url": "https://github.com/player-ui/vscode-player.git"
   },
   "files": [
+    "dist",
     "player-syntax.vsix",
     "syntaxes",
     "language-configuration.json"
@@ -29,16 +31,54 @@
   "scripts": {
     "release": "auto shipit",
     "labelCheck": "auto pr-check",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky install",
+    "lint": "eslint src --cache",
+    "test": "node ./tests/run.js",
+    "vscode:prepublish": "npm run build",
+    "esbuild-base": "esbuild ./src/index.ts --bundle --outfile=dist/index.js --external:vscode --format=cjs --platform=node",
+    "build": "npm run esbuild-base -- --sourcemap --minify",
+    "dev": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./"
+  },
+  "dependencies": {
+    "@player-tools/typescript-expression-plugin": "0.2.2--canary.20.519",
+    "@player-tools/xlr": "0.2.2--canary.20.519",
+    "@player-tools/xlr-utils": "0.2.2--canary.20.519",
+    "@types/node": "^18.11.18"
   },
   "devDependencies": {
+    "@auto-it/vscode": "^10.37.6",
+    "@design-systems/eslint-config": "^2.17.8",
+    "@types/mocha": "^10.0.1",
+    "@vscode/test-electron": "^2.2.1",
     "auto": "^10.37.6",
+    "esbuild": "^0.16.14",
+    "expect": "^29.3.1",
+    "globby": "^11.1.0",
     "husky": "^7.0.0",
     "is-ci": "^3.0.0",
+    "jest-snapshot": "^29.3.1",
     "lint-staged": "^11.0.0",
-    "prettier": "^2.3.2"
+    "mocha": "^10.2.0",
+    "prettier": "^2.3.2",
+    "react": "^18.2.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
+    "vscode": "^1.1.37"
   },
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
+  ],
   "contributes": {
+    "typescriptServerPlugins": [
+      {
+        "name": "@player-tools/typescript-expression-plugin",
+        "enableForWorkspaceTypeScriptVersions": true
+      }
+    ],
     "languages": [
       {
         "id": "source.player.binding",
@@ -92,9 +132,23 @@
           "meta.embedded.block.binding": "source.player.binding"
         }
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Player",
+      "type": "object",
+      "properties": {
+        "player.plugins": {
+          "type": "array",
+          "description": "List of plugins to load",
+          "scope": "resource",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
   },
-  "dependencies": {
-    "@auto-it/vscode": "^10.37.6"
+  "volta": {
+    "node": "18.13.0"
   }
 }

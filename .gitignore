@@ -119,3 +119,4 @@ dist
 
 reports
 .DS_Store
+*.vsix
